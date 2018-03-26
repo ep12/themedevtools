@@ -1,6 +1,7 @@
 def icr(i: float):
 	return [0, 255, round(i)][(i >= 0) + (i < 256)]
 
+
 def cr(c: tuple):
 	return tuple([icr(x) for x in c])
 
@@ -41,16 +42,41 @@ def initColors():
 
 
 def printcolordemo(c: tuple):
-	assert isinstance(c, (tuple, list))
-	print('\x1b[48;2;{0};{1};{2}m{3}\x1b[0m'.format(*c, '  '), end='')
+	assert isinstance(c, (tuple, list, int))
+	if isinstance(c, int):
+		assert c < 256 and c >= 0
+		print('\x1b[48;5;{1}m{0}\x1b[0m'.format('  ', c), end='')
+	else:
+		print('\x1b[48;2;{1};{2};{3}m{0}\x1b[0m'.format('  ', *c), end='')
 
 
-def minichart():
-	#
-	for n in range(16, 232):
-		printcolordemo(colors[n])
-		if (n - 16) % 36 is 35:
-			print()
+def minichart(builtin=False):
+	if builtin:
+		for n in range(16):
+			printcolordemo(n)
+			if n % 8 is 7:
+				print()
+		for n in range(16, 232):
+			printcolordemo(n)
+			if (n - 16) % 36 is 35:
+				print()
+		for n in range(232, 256):
+			printcolordemo(n)
+			if (n - 232) % 12 is 11:
+				print()
+	else:
+		for n in range(16):
+			printcolordemo(colors[n])
+			if n % 8 is 7:
+				print()
+		for n in range(16, 232):
+			printcolordemo(colors[n])
+			if (n - 16) % 36 is 35:
+				print()
+		for n in range(232, 256):
+			printcolordemo(colors[n])
+			if (n - 232) % 12 is 11:
+				print()
 
 
 initColors()
