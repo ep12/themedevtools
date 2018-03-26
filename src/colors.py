@@ -33,12 +33,23 @@ bb = (0, 0, 255)
 
 
 def initColors():
-	#
+	colors[0x0], colors[0x8] = (0x00, 0x00, 0x00), (0x80, 0x80, 0x80)
+	colors[0x1], colors[0x9] = (0xc0, 0x00, 0x00), (0xff, 0x00, 0x00)
+	colors[0x2], colors[0xa] = (0x00, 0xc0, 0x00), (0x00, 0xff, 0x00)
+	colors[0x3], colors[0xb] = (0xc0, 0xa0, 0x00), (0xff, 0xff, 0x00)
+	colors[0x4], colors[0xc] = (0x00, 0x00, 0xc0), (0x00, 0x00, 0xff)
+	colors[0x5], colors[0xd] = (0xc0, 0x00, 0xc0), (0xff, 0x00, 0xff)
+	colors[0x6], colors[0xe] = (0x00, 0xc0, 0xc0), (0x00, 0xff, 0xff)
+	colors[0x7], colors[0xf] = (0xc0, 0xc0, 0xc0), (0xff, 0xff, 0xff)
 	for n in range(216):
-		x = sc(br, 1 / 6 * (n % 6))
-		y = sc(bg, 1 / 6 * ((n % 36) // 6))
-		z = sc(bb, 1 / 6 * (n // 36))
+		x = sc(br, 1 / 5 * (n // 36))
+		# x = sc(bb, 1 / 6 * (n % 6))
+		y = sc(bg, 1 / 5 * ((n % 36) // 6))
+		# z = sc(br, 1 / 6 * (n // 36))
+		z = sc(bb, 1 / 5 * (n % 6))
 		colors[16 + n] = mix(x, y, z)
+	for n in range(24):
+		colors[232 + n] = sc((255, 255, 255), n / 24)
 
 
 def printcolordemo(c: tuple):
@@ -62,8 +73,7 @@ def minichart(builtin=False):
 				print()
 		for n in range(232, 256):
 			printcolordemo(n)
-			if (n - 232) % 12 is 11:
-				print()
+		print()
 	else:
 		for n in range(16):
 			printcolordemo(colors[n])
@@ -75,8 +85,7 @@ def minichart(builtin=False):
 				print()
 		for n in range(232, 256):
 			printcolordemo(colors[n])
-			if (n - 232) % 12 is 11:
-				print()
+		print()
 
 
 initColors()
